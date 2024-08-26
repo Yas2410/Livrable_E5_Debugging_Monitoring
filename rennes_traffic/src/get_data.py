@@ -11,25 +11,30 @@ class GetData(object):
         self.data = response.json()
 
     def processing_one_point(self, data_dict: dict):
-        # Création du DataFrame
+        # Création du DataFrame temporaire à partir du dictionnaire "data_dict"
         temp = pd.DataFrame(
             {
                 key: [data_dict[key]]
                 for key in [
                     'datetime',
-                    #BUG : Renvoie une KeyError
-                    'traffic_status',
+                    # 'traffic_status', N'existe pas dans le json ("voir json_analysis.py")  # noqa
                     'geo_point_2d',
                     'averagevehiclespeed',
                     'traveltime',
                     'trafficstatus'
                 ]
             }
-        )  # noqa
+    )  # noqa
 
-        temp = temp.rename(columns={'traffic_status': 'traffic'})
-        temp['lat'] = temp.geo_point_2d.map(lambda x: x['lattitude'])
-        temp['lon'] = temp.geo_point_2d.map(lambda x: x['longitude'])
+        # De même ici, on renomme "traffic_status" sans underscore en "traffic"
+        temp = temp.rename(columns={'trafficstatus': 'traffic'})
+
+        # Ici, on va également avoir une KeyError si on laisse "lattitude" et "longitude"  # noqa
+        # On remplace donc comme dans le fichier json, par "lat" et "lon"
+        temp['lat'] = temp.geo_point_2d.map(lambda x: x['lat'])
+        temp['lon'] = temp.geo_point_2d.map(lambda x: x['lon'])
+
+        # Suppression de la colonne "geo_point_2d"
         del temp['geo_point_2d']
 
         return temp
