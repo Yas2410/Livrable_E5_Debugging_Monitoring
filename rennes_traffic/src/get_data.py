@@ -46,7 +46,7 @@ class GetData(object):
         for data_dict in self.data:
 
             temp_df = self.processing_one_point(data_dict)
-            res_df = pd.concat([res_df, temp_df])
+            res_df = pd.concat([res_df, temp_df], ignore_index=True)
 
             res_df = res_df[res_df.traffic != 'unknown']
 

@@ -6,7 +6,7 @@ import numpy as np
 from keras.models import load_model  # type: ignore
 
 from src.get_data import GetData
-from src.utils import create_figure, prediction_from_model 
+from src.utils import create_figure, prediction_from_model
 
 app = Flask(__name__)
 
@@ -19,25 +19,31 @@ model = load_model('model.h5')
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
+    fig_map = create_figure(data)
+    graph_json = fig_map.to_json()
+
     if request.method == 'POST':
 
-        fig_map = create_figure(data)
-        graph_json = fig_map.to_json()
+        # BUG : Ajouter .get ET passer
+        # "selected_hour" à "cat_predict" sinon erreur
+        selected_hour = request.form.get('hour')
 
-        selected_hour = request.form['hour']
-
-        cat_predict = prediction_from_model(model)
+        cat_predict = prediction_from_model(model, selected_hour)
 
         color_pred_map = {0: ["Prédiction : Libre", "green"],
                           1: ["Prédiction : Dense", "orange"],
                           2: ["Prédiction : Bloqué", "red"]}
+
         # BUG : Le fichier html ne se nomme pas "home" mais "index"
-        return render_template('index.html', graph_json=graph_json, text_pred=color_pred_map[cat_predict][0], color_pred=color_pred_map[cat_predict][1])  # noqa
+        # Ajouter aussi selected_hour
+        return render_template('index.html', graph_json=graph_json, text_pred=color_pred_map[cat_predict][0],  # noqa
+                               color_pred=color_pred_map[cat_predict][1], selected_hour=selected_hour)  # noqa
 
     else:
 
         fig_map = create_figure(data)
         graph_json = fig_map.to_json
+
         # BUG : Le fichier html ne se nomme pas "home" mais "index"
         return render_template('index.html', graph_json=graph_json)
 
