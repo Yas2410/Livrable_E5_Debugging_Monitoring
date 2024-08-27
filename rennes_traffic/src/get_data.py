@@ -1,5 +1,5 @@
 import pandas as pd
-import requests
+import requests # type: ignore
 
 
 class GetData(object):
@@ -14,7 +14,7 @@ class GetData(object):
         # Création du DataFrame temporaire à partir du dictionnaire "data_dict"
         temp = pd.DataFrame({
         # Avec suppression de "traffic_status" bug sur l'affichage de la légende # noqa
-        # On va donc garder cette clé mais ajouter la condition None à la fonction  # noqa
+        # On va donc garder cette clé mais ajouter la condition "None" à la fonction  # noqa
         # qui va servir de valeur par défaut si la clé est inexistante, sans renvoyer d'erreurs # noqa
             key: [data_dict.get(key, None)] for key in ['datetime',
                                                         'traffic_status',

@@ -1,15 +1,13 @@
-from flask import Flask, render_template, request
-import plotly.io as pio
+from flask import Flask, render_template, request # type: ignore
+import plotly.io as pio # type: ignore
 
 # Ajout du module Flask monitoring Dashboard
-import flask_monitoringdashboard as dashboard
-
+import flask_monitoringdashboard as dashboard # type: ignore
 
 # Ajout du module logging pour déboggage du code
 import logging
 
 from keras.models import load_model  # type: ignore
-
 from src.get_data import GetData
 from src.utils import create_figure, prediction_from_model
 
@@ -22,7 +20,7 @@ formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 
-# Si utilisation d'un fichier de config pour se connecter au dashboard
+# FLASK MONITORING DASHBOARD : Si utilisation d'un fichier de config pour se connecter au dashboard  # noqa
 dashboard.config.init_from(file='/config.cfg')
 
 try:
@@ -31,7 +29,7 @@ try:
     data = data_retriever.call()
     app.logger.debug("Données récupérées avec succès.")
 except Exception as e:
-    app.logger.warning(f"Un problème est survenu lors de la récupération des données : {e}")
+    app.logger.warning(f"Un problème est survenu lors de la récupération des données : {e}")  # noqa
 
 # Ajout d"un try/except au cas où le modèle ne chargerait pas
 try:
@@ -58,22 +56,22 @@ def index():
             cat_predict = prediction_from_model(model, selected_hour)
 
             color_pred_map = {0: ["Prédiction : Libre", "green"],
-                            1: ["Prédiction : Dense", "orange"],
-                            2: ["Prédiction : Bloqué", "red"]}
+                              1: ["Prédiction : Dense", "orange"],
+                              2: ["Prédiction : Bloqué", "red"]}
 
             # BUG : Le fichier html ne se nomme pas "home" mais "index"
             # Ajouter aussi selected_hour
-            app.logger.debug(f"Prédiction effectuée pour l'heure sélectionnée : {selected_hour}")
+            app.logger.debug(f"Prédiction effectuée pour l'heure sélectionnée : {selected_hour}")  # noqa
             return render_template('index.html',
-                                graph_json=graph_json,
-                                text_pred=color_pred_map[cat_predict][0],
-                                color_pred=color_pred_map[cat_predict][1],
-                                selected_hour=selected_hour)
+                                   graph_json=graph_json,
+                                   text_pred=color_pred_map[cat_predict][0],
+                                   color_pred=color_pred_map[cat_predict][1],
+                                   selected_hour=selected_hour)
         except Exception as e:
 
-            app.logger.error(f"Erreur pendant le traitement d'une requête POST : {e}")
+            app.logger.error(f"Erreur pendant le traitement d'une requête POST: {e}")  # noqa
             return f"Une erreur est survenue : {str(e)}", 500
-    
+
     else:
         try:
             fig_map = create_figure(data)
@@ -81,8 +79,9 @@ def index():
             # BUG : Le fichier html ne se nomme pas "home" mais "index"
             return render_template('index.html', graph_json=graph_json)
         except Exception as e:
-            app.logger.error(f"Erreur pendant le traitement de la requête GET : {e}")
+            app.logger.error(f"Erreur pendant le traitement de la requête GET : {e}")  # noqa
             return f"Une erreur est survenue : {str(e)}", 500
+
 
 # Ajout des paramètres pour la configuration du dashboard
 dashboard.config.enable_logging = True
@@ -95,9 +94,11 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
+# Pour la gestion des erreurs avec Logging Python
 @app.before_request
 def before_request_logging():
-    app.logger.debug(f"Détails de la requête - Méthode : {request.method}, Chemin : {request.path}")
+    app.logger.debug(f"Détails de la requête - Méthode : {request.method}, Chemin : {request.path}")  # noqa
+
 
 @app.errorhandler(Exception)
 def handle_exception(e):

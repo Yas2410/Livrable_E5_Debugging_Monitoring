@@ -1,5 +1,7 @@
-import requests
+import requests # type: ignore
 
+
+#Compréhension du contenu du fichier JSON
 json_url = "https://data.rennesmetropole.fr/api/explore/v2.1/catalog/datasets/etat-du-trafic-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B"
 
 response = requests.get(json_url)
