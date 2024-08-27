@@ -1,7 +1,12 @@
 from flask import Flask, render_template, request
 import plotly.io as pio
-#Ajout du module Flask monitoring Dashboard
+
+# Ajout du module Flask monitoring Dashboard
 import flask_monitoringdashboard as dashboard
+
+
+# Ajout du module logging pour déboggage du code
+import logging
 
 from keras.models import load_model  # type: ignore
 
@@ -9,6 +14,22 @@ from src.get_data import GetData
 from src.utils import create_figure, prediction_from_model
 
 app = Flask(__name__)
+# Configuration du module Logging
+# Configure Flask logging
+app.logger.setLevel(logging.INFO)
+handler = logging.FileHandler('app.log')
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+app.logger.addHandler(handler)
+
+@app.before_request
+def before_request_logging():
+    app.logger.info(f"Request incoming: {request.method} {request.path}")
+
+app.logger.setLevel(logging.INFO)
+handler = logging.FileHandler('app.log')
+app.logger.addHandler(handler)
+
 # Si utilisation d'un fichier de config pour se connecter au dashboard
 dashboard.config.init_from(file='/config.cfg')
 
@@ -20,9 +41,11 @@ data = data_retriever.call()
 
 # Ajout d"un try/except au cas où le modèle ne chargerait pas
 try:
+    app.logger.info('Essai du chargement du modèle...')
     model = load_model('model.h5')
+    app.logger.info('Le modèle a été chargé avec succès')
 except Exception as e:
-    print(f"Erreur lors du chargement du modèle : {e}")
+    app.logger.error(f"Erreur lors du chargement du modèle : {e}")
     model = None
 
 
@@ -71,4 +94,7 @@ dashboard.config.monitor_level = 3
 if __name__ == '__main__':
     app.run(debug=True)
 
-
+@app.errorhandler(Exception)
+def handle_exception(e):
+    app.logger.error(f"Unhandled exception: {e}", exc_info=True)
+    return render_template("error.html"), 500
