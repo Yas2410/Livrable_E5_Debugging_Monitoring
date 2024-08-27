@@ -83,12 +83,10 @@ def index():
             return f"Une erreur est survenue : {str(e)}", 500
 
 
-# Ajout des paramètres pour la configuration du dashboard
-dashboard.config.enable_logging = True
-# dashboard.config.init_from(file='/config.cfg')
-# Flask monitoring dashboard : Liaison du tableau de bord à l'application Flask
+# Flask monitoring dashboard : Liaison du tableau de bord à l'application Flask et ajustement des params  # noqa
 dashboard.bind(app)
 dashboard.config.monitor_level = 3
+dashboard.config.enable_logging = True
 
 if __name__ == '__main__':
     app.run(debug=True)
