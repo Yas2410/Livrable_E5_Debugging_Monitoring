@@ -72,3 +72,30 @@
 2024-08-27 15:46:46,091 - INFO - Essai du chargement du modèle...
 2024-08-27 15:46:46,226 - INFO - Le modèle a été chargé avec succès
 2024-08-27 15:47:24,308 - DEBUG - Prédiction effectuée pour l'heure sélectionnée : 2
+2024-08-27 15:52:46,942 - DEBUG - Prédiction effectuée pour l'heure sélectionnée : 4
+2024-08-27 17:22:45,362 - DEBUG - Données récupérées avec succès.
+2024-08-27 17:22:45,363 - INFO - Essai du chargement du modèle...
+2024-08-27 17:22:45,541 - INFO - Le modèle a été chargé avec succès
+2024-08-27 17:55:35,474 - DEBUG - Données récupérées avec succès.
+2024-08-27 17:55:35,475 - INFO - Essai du chargement du modèle...
+2024-08-27 17:55:35,610 - INFO - Le modèle a été chargé avec succès
+2024-08-27 18:31:32,231 - DEBUG - Données récupérées avec succès.
+2024-08-27 18:31:32,231 - INFO - Essai du chargement du modèle...
+2024-08-27 18:31:32,376 - INFO - Le modèle a été chargé avec succès
+2024-08-27 18:31:40,928 - DEBUG - Données récupérées avec succès.
+2024-08-27 18:31:40,928 - INFO - Essai du chargement du modèle...
+2024-08-27 18:31:41,053 - INFO - Le modèle a été chargé avec succès
+2024-08-27 18:32:21,760 - DEBUG - Prédiction effectuée pour l'heure sélectionnée : 6
+2024-08-27 19:34:49,448 - DEBUG - Prédiction effectuée pour l'heure sélectionnée : 18
+2024-08-27 19:35:17,845 - DEBUG - Prédiction effectuée pour l'heure sélectionnée : 6
+2024-08-27 20:19:08,562 - DEBUG - Données récupérées avec succès.
+2024-08-27 20:19:08,562 - INFO - Essai du chargement du modèle...
+2024-08-27 20:19:08,871 - INFO - Le modèle a été chargé avec succès
+2024-08-27 20:22:33,398 - DEBUG - Données récupérées avec succès.
+2024-08-27 20:22:33,398 - INFO - Essai du chargement du modèle...
+2024-08-27 20:22:33,563 - INFO - Le modèle a été chargé avec succès
+2024-08-27 20:22:47,224 - DEBUG - Données récupérées avec succès.
+2024-08-27 20:22:47,225 - INFO - Essai du chargement du modèle...
+2024-08-27 20:22:47,446 - INFO - Le modèle a été chargé avec succès
+2024-08-27 20:23:00,032 - DEBUG - Prédiction effectuée pour l'heure sélectionnée : 8
+2024-08-27 20:23:23,220 - DEBUG - Prédiction effectuée pour l'heure sélectionnée : 8
