@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import plotly.io as pio
+#Ajout du module Flask monitoring Dashboard
+import flask_monitoringdashboard as dashboard
 
 from keras.models import load_model  # type: ignore
 
@@ -7,6 +9,7 @@ from src.get_data import GetData
 from src.utils import create_figure, prediction_from_model
 
 app = Flask(__name__)
+
 
 data_retriever = GetData(url="https://data.rennesmetropole.fr/api/explore/v2.1/catalog/datasets/etat-du-trafic-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B")  # noqa
 
@@ -56,5 +59,14 @@ def index():
         return render_template('index.html', graph_json=graph_json)
 
 
+# Ajout des paramètres pour la configuration du dashboard
+dashboard.config.enable_logging = True
+# dashboard.config.init_from(file='/config.cfg')
+# Flask monitoring dashboard : Liaison du tableau de bord à l'application Flask
+dashboard.bind(app)
+dashboard.config.monitor_level = 3
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
