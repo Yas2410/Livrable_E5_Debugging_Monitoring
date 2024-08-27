@@ -9,6 +9,8 @@ from src.get_data import GetData
 from src.utils import create_figure, prediction_from_model
 
 app = Flask(__name__)
+# Si utilisation d'un fichier de config pour se connecter au dashboard
+dashboard.config.init_from(file='/config.cfg')
 
 
 data_retriever = GetData(url="https://data.rennesmetropole.fr/api/explore/v2.1/catalog/datasets/etat-du-trafic-en-temps-reel/exports/json?lang=fr&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B")  # noqa
